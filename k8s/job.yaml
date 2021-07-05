@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+
+metadata:
+  name: motoblog-pipeline
+
+spec:
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      name: motoblog-pipeline
+    spec:
+      template:
+        spec:
+          containers:
+          - image: ghcr.io/deifyed/motoblog-pipeline:v0.0.1
+            name: motoblog-pipeline
+            env:
+              - name: TRACKS_SOURCE_DIR
+                value: /mnt/
+              - name: IMAGES_SOURCE_DIR
+                value: /mnt/
+              - name: NOTES_SOURCE_DIR
+                value: /mnt/
+              - name: DESTINATION_DIR
+                value: /mnt/motoblog/drafts
+          restartPolicy: OnFailure
+  # Every hour
+  schedule: '0 * * * *'
