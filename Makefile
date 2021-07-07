@@ -173,3 +173,9 @@ test-coverage: fmt lint test-coverage-tools
 	@$(GOCOVMERGE) $(COVERAGE_DIR)/coverage/*.cover > $(COVERAGE_PROFILE)
 	@$(GO) tool cover -html=$(COVERAGE_PROFILE) -o $(COVERAGE_HTML)
 	@$(GOCOV) convert $(COVERAGE_PROFILE) | $(GOCOVXML) > $(COVERAGE_XML)
+
+release: $(RELEASE_DIR)
+	go build -o ${RELEASE_DIR}/motoblog-pipeline
+
+clean:
+	@rm -r build

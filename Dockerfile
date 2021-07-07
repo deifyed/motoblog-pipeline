@@ -15,4 +15,4 @@ FROM golang:1.16.5
 WORKDIR /app
 ENTRYPOINT ["./motoblog-pipeline"]
 
-COPY --from=build /build/build/motoblog-pipeline ./
+COPY --from=build /build/build/release/motoblog-pipeline ./
