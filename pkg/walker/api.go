@@ -2,11 +2,12 @@ package walker
 
 import (
 	"fmt"
-	"github.com/rs/zerolog/log"
 	"io/fs"
 	path2 "path"
 	"strings"
 	"time"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/spf13/afero"
 )
