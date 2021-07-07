@@ -41,7 +41,7 @@ func handleImage(trips []Trip, fs *afero.Afero, path string) error {
 			continue
 		}
 
-		if !metadata.created.After(to) {
+		if !metadata.created.Before(to) {
 			e.Msg("image too recent")
 
 			continue
