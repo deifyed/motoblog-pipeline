@@ -5,7 +5,6 @@ import (
 	"io/fs"
 	path2 "path"
 	"strings"
-	"time"
 
 	"github.com/rs/zerolog/log"
 
@@ -16,7 +15,6 @@ type WalkOpts struct {
 	Fs         *afero.Afero
 	SourceDir  string
 	Extensions []string
-	FromTime   time.Time
 }
 
 func Walk(opts WalkOpts) ([]string, error) {
@@ -48,12 +46,6 @@ func Walk(opts WalkOpts) ([]string, error) {
 		}
 
 		validExtensions[currentExtension]++
-
-		if info.ModTime().Before(opts.FromTime) {
-			e.Msg("too old")
-
-			return nil
-		}
 
 		e.Msg("relevant")
 

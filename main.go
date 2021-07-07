@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -29,10 +28,8 @@ func main() {
 	}
 
 	fs := &afero.Afero{Fs: afero.NewOsFs()}
-	location, _ := time.LoadLocation("Local")
-	fromTime := time.Date(2021, 7, 1, 8, 0, 0, 0, location)
 
-	gatheredPaths, err := gatherPaths(fs, cfg, fromTime)
+	gatheredPaths, err := gatherPaths(fs, cfg)
 	if err != nil {
 		log.Error().Err(err).Msg("gathering relevant paths")
 
@@ -64,12 +61,11 @@ type paths struct {
 	notes  []string
 }
 
-func gatherPaths(fs *afero.Afero, cfg config.Config, fromTime time.Time) (paths, error) {
+func gatherPaths(fs *afero.Afero, cfg config.Config) (paths, error) {
 	images, err := walker.Walk(walker.WalkOpts{
 		Fs:         fs,
 		SourceDir:  cfg.ImagesSourceDir,
 		Extensions: []string{".jpeg", ".jpg", ".png"},
-		FromTime:   fromTime,
 	})
 	if err != nil {
 		return paths{}, fmt.Errorf("fetching images: %w", err)
@@ -79,7 +75,6 @@ func gatherPaths(fs *afero.Afero, cfg config.Config, fromTime time.Time) (paths,
 		Fs:         fs,
 		SourceDir:  cfg.TracksSourceDir,
 		Extensions: []string{".gpx"},
-		FromTime:   fromTime,
 	})
 	if err != nil {
 		return paths{}, fmt.Errorf("fetching routes: %w", err)
@@ -89,7 +84,6 @@ func gatherPaths(fs *afero.Afero, cfg config.Config, fromTime time.Time) (paths,
 		Fs:         fs,
 		SourceDir:  cfg.NotesSourceDir,
 		Extensions: []string{".md", ".txt"},
-		FromTime:   fromTime,
 	})
 	if err != nil {
 		return paths{}, fmt.Errorf("fetching notes: %w", err)
