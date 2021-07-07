@@ -6,4 +6,3 @@ type filesystemExporter struct {
 	fs        *afero.Afero
 	outputDir string
 }
-

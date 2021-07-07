@@ -12,7 +12,7 @@ func Load() (Config, error) {
 		DestinationDir:  viper.GetString("DESTINATION_DIR"),
 		ImagesSourceDir: viper.GetString("IMAGES_SOURCE_DIR"),
 		TracksSourceDir: viper.GetString("TRACKS_SOURCE_DIR"),
-		NotesSourceDir: viper.GetString("NOTES_SOURCE_DIR"),
+		NotesSourceDir:  viper.GetString("NOTES_SOURCE_DIR"),
 	}, nil
 }
 
